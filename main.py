@@ -1,6 +1,7 @@
 import base64
 import json
 import logging
+import urlparse
 import StringIO
 from PIL import Image, ImageFont, ImageDraw
 
@@ -56,6 +57,12 @@ class EmailSendingUnavailable(HTTPException):
 abort = Aborter()
 default_exceptions[503] = EmailSendingUnavailable
 HTTP_STATUS_CODES[503] = 'Email Sending Over Quota, Try again Later'
+
+
+def get_sheet_id(url):
+    path = urlparse.urlsplit(url).path
+    sheet_id = path.split('/')[3]
+    return sheet_id
 
 
 def cert(name):
