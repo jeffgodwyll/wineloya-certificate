@@ -1,4 +1,4 @@
-application: jeff-newsite
+application: wineloya-digi-cets
 version: 1
 runtime: python27
 api_version: 1
@@ -6,7 +6,7 @@ threadsafe: true
 
 handlers:
 - url: .*
-  script: cert.app
+  script: main.app
 
 libraries:
 - name: PIL
