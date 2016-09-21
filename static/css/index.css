@@ -1,0 +1,92 @@
+body {
+  height: 100%;
+  background: rgb(255, 255, 255);
+  background: url('../images/texture-1654986_1920(2).jpg'), -webkit-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/texture-1654986_1920(2).jpg'),    -moz-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/texture-1654986_1920(2).jpg'),      -o-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/texture-1654986_1920(2).jpg'),     -ms-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/texture-1654986_1920(2).jpg'),         linear-gradient(337deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background-repeat: repeat, repeat;
+  background-size: 960px 635.5px, 100% 100%;
+  background-position: left top, 0% 0%;
+  background-attachment: scroll, scroll;
+  font: 400 1em/1.38 'Fauna One';
+  color: rgb(57, 55, 55);
+}
+
+.main-div {
+  width: 48.3333333333%;
+  height: 268px;
+  margin: 259px auto 0;
+  background-color: rgb(41, 39, 39);
+}
+
+.sheet {
+  display: block;
+  width: 94.3103448275%;
+  height: 59px;
+  margin: 68px auto 0;
+  padding: 0 10px;
+  border: 1px solid rgb(95, 93, 93);
+  background-color: rgba(24, 93, 124, 0);
+  font-size: 0.813em;
+  text-align: center;
+  color: rgb(242, 231, 231);
+}
+
+.submit {
+  display: block;
+  width: 24.6551724137%;
+  height: 34px;
+  margin: 35px auto 0;
+  border-radius: 3px;
+  background-color: rgb(0, 136, 204);
+  font-size: 1em;
+  text-align: center;
+  color: rgb(57, 55, 55);
+}
+
+
+.text {
+  width: 86.97%;
+  min-height: 28px;
+  margin: 197px auto 0;
+  font-size: 1em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+.title {
+  margin: 11px auto 0;
+  font-size: 1em;
+  text-align: center;
+  color: rgb(242, 231, 231);
+}
+
+.text span {
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-color: transparent;
+  border-style: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: transparent;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  text-decoration: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  color: rgb(242, 231, 231);
+  opacity: 1;
+  word-break: normal;
+  word-wrap: normal;
+  white-space: normal;
+}
+

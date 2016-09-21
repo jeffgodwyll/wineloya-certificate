@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>{% block title %}Send Certificates{% endblock %}</title>
+  <link href="http://fonts.googleapis.com/css?family=Fauna+One:400,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/static/css/standardize.css">
+  <link rel="stylesheet" href="/static/css/index-grid.css">
+  <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body class="body page-index clearfix">
+  <div id="main-div" class="main-div clearfix">
+    {% block main %}
+      <form method="POST" action='/sheet'>
+      <input class="sheet" name="sheet" type="text">
+      <button id="submit" class="submit js-submit">submit</button>
+      </form>
+    {% endblock main %}
+  </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import base64
-import json
+# import json
 import logging
 import urlparse
 import StringIO
@@ -7,8 +7,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 from google.appengine.api import mail, app_identity
 from google.appengine.runtime import apiproxy_errors
-from flask import (
-    Flask, request, render_template_string)
+from flask import Flask, request, render_template_string, render_template
 from werkzeug.exceptions import HTTPException, Aborter, default_exceptions
 from werkzeug.http import HTTP_STATUS_CODES
 
@@ -42,6 +41,9 @@ HOME_TEMPLATE = """
 Find me @ <a href="https://www.jeffgodwyll.com">https://www.jeffgodwyll.com</a>
 """
 
+
+################################################################################
+# Helpers
 
 class SheetNotFound(HttpError):
     """Throw this when sheet is not found"""
@@ -123,41 +125,45 @@ def sheets_client():
     return build('sheets', 'v4', http=oauth2.http())
 
 
+################################################################################
+# Routes
+
 @app.errorhandler(503)
 def errormail(e):
     return e, 503
 
 
-@app.route('/sheet/<sheet_id>')
+@app.route('/sheet', methods=['GET', 'POST'])
 @oauth2.required
-def sheets(sheet_id):
-    service = sheets_client()
-    # pass in whole url, use urlparse?
-    # spreadsheetId = sheet_url.split('/')[5]
-    # spreadsheetId = sheet_id
-    logger.info('Spreadsheet with id: {} was accessed'.format(sheet_id))
-    try:
-        result = service.spreadsheets().values().get(
-            spreadsheetId=sheet_id, range='A2:E').execute()
-        values = result.get('values', [])
-        for value in values:
-            last_name = value[1]
-            first_name = value[2]
-            name = '{} {}'.format(last_name, first_name)
-            email = value[4]
-            send_cert(name, email)
-    except HttpError, err:
-        if err.resp.status in [404]:
-            # reason = json.loads(err.content).reason
-            # return json.dumps(reason)
-            msg = '{}: Check that the sheet provided is valid: {}'.format(
-                err.resp.reason, sheet_id)
-            logger.error(msg)
-            return msg
-        else:
-            raise
-
-    return json.dumps(values)
+def sheets():
+    sheet_id = ''
+    if request.method == 'POST':
+        sheet_id = get_sheet_id(request.form['sheet'])
+        service = sheets_client()
+        logger.info('Spreadsheet with id: {} was accessed'.format(sheet_id))
+        try:
+            result = service.spreadsheets().values().get(
+                spreadsheetId=sheet_id, range='A2:E').execute()
+            values = result.get('values', [])
+            for value in values:
+                last_name = value[1]
+                first_name = value[2]
+                name = '{} {}'.format(last_name, first_name)
+                email = value[4]
+                send_cert(name, email)
+        except HttpError, err:
+            if err.resp.status in [404]:
+                # reason = json.loads(err.content).reason
+                # return json.dumps(reason)
+                msg = '{}: Check that the sheet provided is valid: {}'.format(
+                    err.resp.reason, sheet_id)
+                logger.error(msg)
+                return msg
+            else:
+                raise
+        # return json.dumps(values)
+        return render_template('finish.html')
+    return render_template('index.html')
 
 
 @app.route('/cert-demo', methods=['GET', 'POST'])
