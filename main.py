@@ -1,20 +1,22 @@
+# system imports
 import base64
 # import json
 import logging
 import urlparse
 import StringIO
+
+# app engine runtime packages
 from PIL import Image, ImageFont, ImageDraw
 
-from google.appengine.api import mail, app_identity
-from google.appengine.runtime import apiproxy_errors
+# flask
 from flask import Flask, request, render_template_string, render_template
 from werkzeug.exceptions import HTTPException, Aborter, default_exceptions
 from werkzeug.http import HTTP_STATUS_CODES
 
+# google api client library imports
 from apiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client.contrib.flask_util import UserOAuth2
-
 import httplib2
 
 # mailjet
