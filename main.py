@@ -46,7 +46,7 @@ TEMPLATE = """
 {% if img %}
   <img src='data:image/jpeg;base64,{{ img }}'>
 {% endif %}
-<form method="POST" action='/cert-demo'>
+<form method="POST" action='/single'>
   Enter Name: <input type="text" name="name">
   Email: <input type="email" name="email">
   <input type="submit">
@@ -54,7 +54,8 @@ TEMPLATE = """
 """
 
 HOME_TEMPLATE = """
-Find me @ <a href="https://www.jeffgodwyll.com">https://www.jeffgodwyll.com</a>
+Send a <a href="/single">single certificate</a> or
+in bulk <a href="/sheet">from a sheet</a>
 """
 
 
@@ -79,7 +80,11 @@ HTTP_STATUS_CODES[503] = 'Email Sending Over Quota, Try again Later'
 
 def get_sheet_id(url):
     path = urlparse.urlsplit(url).path
-    sheet_id = path.split('/')[3]
+    try:
+        sheet_id = path.split('/')[3]
+    except IndexError:
+        logger.exception('url passed is {}'.format(url))
+        sheet_id = ''
     return sheet_id
 
 
@@ -181,7 +186,7 @@ def sheets():
     return render_template('index.html')
 
 
-@app.route('/cert-demo', methods=['GET', 'POST'])
+@app.route('/single', methods=['GET', 'POST'])
 def cert_demo():
     name = ''
     if request.method == 'POST':
