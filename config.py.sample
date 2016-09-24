@@ -1,0 +1,4 @@
+# MailJet Credentials
+MJ_API_KEY = ''
+MJ_API_SECRET = ''
+MJ_SENDER = ''
