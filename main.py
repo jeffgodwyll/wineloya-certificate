@@ -17,10 +17,26 @@ from oauth2client.contrib.flask_util import UserOAuth2
 
 import httplib2
 
+# mailjet
+import mailjet_rest
+import requests_toolbelt.adapters.appengine
+
+# local imports
+import config
+
+# Use the App Engine requests adapter to allow the requests library to be
+# used on App Engine.
+requests_toolbelt.adapters.appengine.monkeypatch()
+
 app = Flask(__name__)
+app.config.from_object(config)
 app.config['SECRET_KEY'] = 'random*strangageasf'
 app.config['GOOGLE_OAUTH2_CLIENT_SECRETS_FILE'] = 'client_secret.json'
 logger = logging.getLogger(__name__)
+
+MAILJET_API_KEY = app.config['MJ_API_KEY']
+MAILJET_API_SECRET = app.config['MJ_API_SECRET']
+MAILJET_SENDER = app.config['MJ_SENDER']
 
 oauth2 = UserOAuth2(
     app,
@@ -94,25 +110,24 @@ def cert(name):
 def send_cert(name, email):
     """Send certificates via provided mail
     """
-    img = cert(name)
-    try:
-        mail.send_mail(
-            sender='{}@appspot.gserviceaccount.com'.format(
-                app_identity.get_application_id()),
-            to=email,
-            subject="Your Certificate",
-            body="""
-            Attached is a copy of the certificate for ...
-
-            Regards,
-            ...
-            """,
-            attachments=[('Certificate.jpg', base64.b64decode(img))]
-        )
-        logger.info('Email sent to: {}'.format(email))
-    except apiproxy_errors.OverQuotaError, msg:
-        logger.error(msg)
-        abort(503)
+    certificate = cert(name)
+    client = mailjet_rest.Client(
+        auth=(MAILJET_API_KEY, MAILJET_API_SECRET))
+    data = {
+        'FromEmail': MAILJET_SENDER,
+        'FromName': 'Wineloya Digital Advertising',
+        'Subject': 'Subject: Digital Skills Training Certificate',
+        'Text-part':
+            'Congratulations!, your digital skills training completion certificate is here!',
+        'Recipients': [{'Email': email}],
+        'Attachments': [{
+            "Content-type": "img/jpeg",
+            "Filename": "Certificate.jpg",
+            "content": certificate
+        }],
+    }
+    result = client.send.create(data=data)
+    logger.info(result.json())
 
 
 def sheets_client():
