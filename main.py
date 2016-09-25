@@ -119,8 +119,9 @@ def send_cert(name, email):
         'FromEmail': MAILJET_SENDER,
         'FromName': 'Wineloya Digital Advertising',
         'Subject': 'Subject: Digital Skills Training Certificate',
-        'Text-part':
-            'Congratulations!, your digital skills training completion certificate is here!',
+        'Text-part': (
+            'Congratulations!, your digital skills training completion'
+            'certificate is here!'),
         'Recipients': [{'Email': email}],
         'Attachments': [{
             "Content-type": "img/jpeg",
