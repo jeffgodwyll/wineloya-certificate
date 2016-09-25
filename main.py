@@ -55,11 +55,6 @@ TEMPLATE = """
 </form
 """
 
-HOME_TEMPLATE = """
-Send a <a href="/single">single certificate</a> or
-in bulk <a href="/sheet">from a sheet</a>
-"""
-
 
 ################################################################################
 # Helpers
@@ -185,7 +180,7 @@ def sheets():
                 raise
         # return json.dumps(values)
         return render_template('finish.html')
-    return render_template('index.html')
+    return render_template('sheet.html')
 
 
 @app.route('/single', methods=['GET', 'POST'])
@@ -205,7 +200,7 @@ def cert_demo():
 
 @app.route('/')
 def home():
-    return render_template_string(HOME_TEMPLATE)
+    return render_template("home.html")
 
 
 if __name__ == '__main__':
