@@ -85,7 +85,7 @@ def get_sheet_id(url):
     return sheet_id
 
 
-def cert(name):
+def create_cert(name):
     """Create certificate
     """
     img = Image.open("cert.jpg")
@@ -112,7 +112,7 @@ def cert(name):
 def send_cert(name, email):
     """Send certificates via provided mail
     """
-    certificate = cert(name)
+    certificate = create_cert(name)
     client = mailjet_rest.Client(
         auth=(MAILJET_API_KEY, MAILJET_API_SECRET))
     data = {
@@ -190,13 +190,13 @@ def cert_demo():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        img = cert(name)
+        img = create_cert(name)
 
         if email:
             send_cert(name, email)
 
         render_template_string(TEMPLATE, img=img)
-    return render_template_string(TEMPLATE, img=cert(name))
+    return render_template_string(TEMPLATE, img=create_cert(name))
 
 
 @app.route('/')
