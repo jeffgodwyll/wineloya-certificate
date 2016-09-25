@@ -3,7 +3,7 @@ import logging
 import urlparse
 
 # flask
-from flask import Flask, request, render_template_string, render_template
+from flask import Flask, request, render_template
 from werkzeug.exceptions import HTTPException, Aborter, default_exceptions
 from werkzeug.http import HTTP_STATUS_CODES
 
@@ -145,13 +145,10 @@ def sheets():
 
 
 @app.route('/single', methods=['GET', 'POST'])
-def cert_demo():
-    name = ''
+def single():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        img = create_cert(name)
-
         if email:
             send_cert(name, email)
 
