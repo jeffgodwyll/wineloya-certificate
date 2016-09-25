@@ -89,4 +89,38 @@ body {
   word-wrap: normal;
   white-space: normal;
 }
-
+.email {
+  display: block;
+  width: 52.9310344827%;
+  height: 41px;
+  margin: 36px auto 0;
+  padding: 0 10px;
+  border: 1px solid rgb(95, 93, 93);
+  background-color: rgba(24, 93, 124, 0);
+  font-size: 0.813em;
+  text-align: center;
+  color: rgb(242, 231, 231);
+}
+.name {
+  display: block;
+  width: 53.1034482758%;
+  height: 41px;
+  margin: 44px auto 0;
+  padding: 0 10px;
+  border: 1px solid rgb(95, 93, 93);
+  background-color: rgba(24, 93, 124, 0);
+  font-size: 0.813em;
+  text-align: center;
+  color: rgb(242, 231, 231);
+}
+.submit_single {
+  display: block;
+  width: 24.6551724137%;
+  height: 34px;
+  margin: 20px auto 0;
+  border-radius: 3px;
+  background-color: rgb(0, 136, 204);
+  font-size: 1em;
+  text-align: center;
+  color: rgb(57, 55, 55);
+}

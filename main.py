@@ -1,12 +1,6 @@
 # system imports
-import base64
-# import json
 import logging
 import urlparse
-import StringIO
-
-# app engine runtime packages
-from PIL import Image, ImageFont, ImageDraw
 
 # flask
 from flask import Flask, request, render_template_string, render_template
@@ -44,17 +38,6 @@ MAILJET_SENDER = app.config['MJ_SENDER']
 oauth2 = UserOAuth2(
     app,
     scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
-
-TEMPLATE = """
-{% if img %}
-  <img src='data:image/jpeg;base64,{{ img }}'>
-{% endif %}
-<form method="POST" action='/single'>
-  Enter Name: <input type="text" name="name">
-  Email: <input type="email" name="email">
-  <input type="submit">
-</form
-"""
 
 
 ################################################################################
@@ -172,8 +155,8 @@ def cert_demo():
         if email:
             send_cert(name, email)
 
-        render_template_string(TEMPLATE, img=img)
-    return render_template_string(TEMPLATE, img=create_cert(name))
+        render_template('single.html')
+    return render_template('single.html')
 
 
 @app.route('/')
