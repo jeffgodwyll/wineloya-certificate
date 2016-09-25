@@ -1,11 +1,11 @@
 body {
   height: 100%;
   background: rgb(255, 255, 255);
-  background: url('../images/texture-1654986_1920(2).jpg'), -webkit-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
-  background: url('../images/texture-1654986_1920(2).jpg'),    -moz-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
-  background: url('../images/texture-1654986_1920(2).jpg'),      -o-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
-  background: url('../images/texture-1654986_1920(2).jpg'),     -ms-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
-  background: url('../images/texture-1654986_1920(2).jpg'),         linear-gradient(337deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/background.jpg'), -webkit-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/background.jpg'),    -moz-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/background.jpg'),      -o-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/background.jpg'),     -ms-linear-gradient(113deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
+  background: url('../images/background.jpg'),         linear-gradient(337deg, rgb(255, 255, 255) 0%, rgb(0, 0, 0) 10%) rgb(41, 32, 32);
   background-repeat: repeat, repeat;
   background-size: 960px 635.5px, 100% 100%;
   background-position: left top, 0% 0%;
