@@ -25,6 +25,7 @@ import requests_toolbelt.adapters.appengine
 
 # local imports
 import config
+from utils.pdf import create_cert
 
 # Use the App Engine requests adapter to allow the requests library to be
 # used on App Engine.
@@ -85,30 +86,6 @@ def get_sheet_id(url):
     return sheet_id
 
 
-def create_cert(name):
-    """Create certificate
-    """
-    img = Image.open("cert.jpg")
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("fonts/OpenSans-LightItalic.ttf", size=26)
-    w, h = font.getsize(name)
-    logger.info('Text width is: {} and height is: {}'.format(w, h))
-    # rgba 91,91,91,1
-    # image width is 576
-    s = (576-w)/2
-    draw.text((s, 140), name, (91, 91, 91, 1), font=font)
-
-    # TODO:
-    # save as a img to gcs
-
-    output = StringIO.StringIO()
-    img.save(output, 'JPEG', resolution=100.0)
-    actual_image = base64.b64encode(output.getvalue())
-    output.close()
-
-    return actual_image
-
-
 def send_cert(name, email):
     """Send certificates via provided mail
     """
@@ -124,8 +101,8 @@ def send_cert(name, email):
             'certificate is here!'),
         'Recipients': [{'Email': email}],
         'Attachments': [{
-            "Content-type": "img/jpeg",
-            "Filename": "Certificate.jpg",
+            "Content-type": "application/pdf",
+            "Filename": "Certificate.pdf",
             "content": certificate
         }],
     }

@@ -1,3 +1,6 @@
+import base64
+import StringIO
+
 from reportlab.pdfgen import canvas as can
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfbase import pdfmetrics
@@ -8,11 +11,12 @@ pdfmetrics.registerFont(TTFont('OpenSans', './fonts/OpenSans-Light.ttf'))
 
 
 def create_cert(name):
-    """Given student's name, generate certificate of completion
+    """Given student's name, return a generated certificate of completion
 
     :param name: Student's name from google sheets
     """
-    canvas = can.Canvas('aaa.pdf', pagesize=landscape(letter))
+    output = StringIO.StringIO()
+    canvas = can.Canvas(output, pagesize=landscape(letter))
 
     page_width, page_height = canvas._pagesize
 
@@ -28,3 +32,6 @@ def create_cert(name):
 
     canvas.showPage()
     canvas.save()
+
+    certificate = base64.b64encode(output.getvalue())
+    return certificate
