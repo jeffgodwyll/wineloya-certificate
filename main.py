@@ -2,6 +2,9 @@
 import logging
 import urlparse
 
+# app engine apis
+from google.appengine.api import taskqueue
+
 # flask
 from flask import Flask, request, render_template
 from werkzeug.exceptions import HTTPException, Aborter, default_exceptions
@@ -111,6 +114,21 @@ def errormail(e):
     return e, 503
 
 
+@app.route('/emailtask', methods=['POST'])
+def email_task():
+    values = request.values.getlist('values')
+    import pdb
+    pdb.set_trace()
+
+    # for value in values:
+    #     last_name = value[1]
+    #     first_name = value[2]
+    #     name = '{} {}'.format(last_name, first_name)
+    #     email = value[4]
+    #     send_cert(name, email)
+    return ('OK')
+
+
 @app.route('/sheet', methods=['GET', 'POST'])
 @oauth2.required
 def sheets():
@@ -123,16 +141,13 @@ def sheets():
             result = service.spreadsheets().values().get(
                 spreadsheetId=sheet_id, range='A2:E').execute()
             values = result.get('values', [])
-            for value in values:
-                last_name = value[1]
-                first_name = value[2]
-                name = '{} {}'.format(last_name, first_name)
-                email = value[4]
-                send_cert(name, email)
+
+            taskqueue.add(url='/emailtask',
+                          params={'values': values})
         except HttpError, err:
             if err.resp.status in [404]:
                 # reason = json.loads(err.content).reason
-                # return json.dumps(reason)
+                # return json.dumps(reaeon)
                 msg = '{}: Check that the sheet provided is valid: {}'.format(
                     err.resp.reason, sheet_id)
                 logger.error(msg)
