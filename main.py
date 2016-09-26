@@ -3,7 +3,7 @@ import logging
 import urlparse
 
 # app engine apis
-from google.appengine.api import taskqueue
+from google.appengine.ext import deferred
 
 # flask
 from flask import Flask, request, render_template
@@ -114,21 +114,6 @@ def errormail(e):
     return e, 503
 
 
-@app.route('/emailtask', methods=['POST'])
-def email_task():
-    values = request.values.getlist('values')
-    import pdb
-    pdb.set_trace()
-
-    # for value in values:
-    #     last_name = value[1]
-    #     first_name = value[2]
-    #     name = '{} {}'.format(last_name, first_name)
-    #     email = value[4]
-    #     send_cert(name, email)
-    return ('OK')
-
-
 @app.route('/sheet', methods=['GET', 'POST'])
 @oauth2.required
 def sheets():
@@ -142,8 +127,13 @@ def sheets():
                 spreadsheetId=sheet_id, range='A2:E').execute()
             values = result.get('values', [])
 
-            taskqueue.add(url='/emailtask',
-                          params={'values': values})
+            for value in values:
+                last_name = value[1]
+                first_name = value[2]
+                name = '{} {}'.format(last_name, first_name)
+                email = value[4]
+                deferred.defer(send_cert, name, email)
+
         except HttpError, err:
             if err.resp.status in [404]:
                 # reason = json.loads(err.content).reason
